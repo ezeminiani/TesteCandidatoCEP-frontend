@@ -1,0 +1,11 @@
+dt {
+    font-weight: bold;
+}
+
+.invalid-feedback {
+    color: red;
+}
+
+.aguarde {
+    color: blue;
+}

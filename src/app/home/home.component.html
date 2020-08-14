@@ -1,0 +1,66 @@
+<div>
+  <form [formGroup]="cepForm" novalidate>
+
+    <div style="margin-bottom: 10px;">
+      <label for="cepf">Digite o CEP</label><br />
+      <input type="text" id="cepf" formControlName="cep">
+      <div *ngIf="cep.hasError('required') && (cep.touched || cep.dirty)" class="invalid-feedback">
+        cep é obrigatório
+      </div>
+      <div *ngIf="cep.hasError('pattern') && (cep.touched || cep.dirty)" class="invalid-feedback">
+        CEP inválido
+      </div>
+    </div>
+
+    <div style="margin-bottom: 10px;">
+      <label>Pesquisar o CEP na:</label><br />
+      <select id="selecao" formControlName="local">
+        <option value="" selected>- selecione o local de pesquisa -</option>
+        <option value="banco" selected>Banco de dados</option>
+        <option value="internet" selected>Internet</option>
+      </select>
+      <div *ngIf="local.hasError('required') && (local.touched || local.dirty)" class="invalid-feedback">
+        tipo de endereço é obrigatório
+      </div>
+    </div>
+
+    <button type="button" [ngClass]="{naoPermitir: !ativaBotaoPesquisar()}" [disabled]="!ativaBotaoPesquisar()"
+      (click)="pesquisar()">Pesquisar</button>
+
+    &nbsp;&nbsp;
+    <button type="button" (click)="limpar()">Limpar</button>
+
+    &nbsp;&nbsp;
+    <span class="aguarde" *ngIf="aguarde">Aguarde...</span>
+
+  </form>
+
+  <div *ngIf="!cepLocalizado">
+    <h3 class="invalid-feedback">CEP não localizado</h3>
+  </div>
+
+  <div *ngIf="localidade !== null && localidade !== undefined">
+    <h3>Resultado:</h3>
+    <dl>
+      <dt>Cep</dt>
+      <dd>{{ localidade.cep }}</dd>
+      <dt>Logradouro</dt>
+      <dd>{{ localidade.logradouro }}</dd>
+      <dt>Complemento</dt>
+      <dd>{{ localidade.complemento }}</dd>
+      <dt>Bairro</dt>
+      <dd>{{ localidade.bairro }}</dd>
+      <dt>Localidade</dt>
+      <dd>{{ localidade.localidade }}</dd>
+      <dt>UF</dt>
+      <dd>{{ localidade.uf }}</dd>
+      <dt>Unidade</dt>
+      <dd>{{ localidade.unidade }}</dd>
+      <dt>IBGE</dt>
+      <dd>{{ localidade.ibge }}</dd>
+      <dt>GIA</dt>
+      <dd>{{ localidade.gia }}</dd>
+    </dl>
+  </div>
+
+</div>

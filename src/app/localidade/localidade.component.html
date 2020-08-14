@@ -1,0 +1,65 @@
+<div>
+  <form [formGroup]="ufForm" novalidate>
+
+    <div style="margin-bottom: 10px;">
+      <label for="uff">Digite a sigla UF</label><br />
+      <input type="text" id="uff" formControlName="uf">
+      <div *ngIf="uf.hasError('required') && (uf.touched || uf.dirty)" class="invalid-feedback">
+        UF é obrigatório
+      </div>
+      <div *ngIf="uf.hasError('pattern') && (uf.touched || uf.dirty)" class="invalid-feedback">
+        UF inválido
+      </div>
+    </div>
+
+    <button type="button" [ngClass]="{naoPermitir: !ativaBotaoPesquisar()}" [disabled]="!ativaBotaoPesquisar()"
+      (click)="pesquisar()">Pesquisar</button>
+
+    &nbsp;&nbsp;
+    <button type="button" (click)="limpar()">Limpar</button>
+
+    &nbsp;&nbsp;
+    <span class="aguarde" *ngIf="aguarde">Aguarde...</span>
+
+  </form>
+
+  <div *ngIf="!ufLocalizado">
+    <h3 class="invalid-feedback">Localidades não encontradas para a UF</h3>
+  </div>
+
+  <div *ngIf="localidade?.length > 0">
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>CEP</th>
+          <th>Logradouro</th>
+          <th>Complemento</th>
+          <th>Bairro</th>
+          <th>Localidade</th>
+          <th>UF</th>
+          <th>Unidade</th>
+          <th>IBGE</th>
+          <th>GIA</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let l of localidade">
+          <td>{{ l.id }}</td>
+          <td>{{ l.cep }}</td>
+          <td>{{ l.logradouro }}</td>
+          <td>{{ l.complemento }}</td>
+          <td>{{ l.bairro }}</td>
+          <td>{{ l.localidade }}</td>
+          <td>{{ l.uf }}</td>
+          <td>{{ l.unidade }}</td>
+          <td>{{ l.ibge }}</td>
+          <td>{{ l.gia }}</td>
+        </tr>
+
+      </tbody>
+    </table>
+
+  </div>
+
+</div>
