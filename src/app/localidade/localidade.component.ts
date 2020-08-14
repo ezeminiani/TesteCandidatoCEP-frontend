@@ -51,19 +51,23 @@ export class LocalidadeComponent implements OnInit, OnDestroy {
       }
       , error => { console.error('Ocorreu um erro ao consultar as localidades', error); }
       , () => {
-        this.aguarde = false;
         
-        if (returnHttpResponse !== null || returnHttpResponse !== undefined) {
-          const resposta = returnHttpResponse as HttpResponse<Endereco[]>;
+        setTimeout(() => {
+          this.aguarde = false;
 
-          if (resposta.status === 200 && resposta.body.length > 0) {
-            this.localidade = resposta.body;
-            this.ufLocalizado = true;
-          } else {
-            this.localidade = [];
-            this.ufLocalizado = false;
+          if (returnHttpResponse !== null || returnHttpResponse !== undefined) {
+            const resposta = returnHttpResponse as HttpResponse<Endereco[]>;
+  
+            if (resposta.status === 200 && resposta.body.length > 0) {
+              this.localidade = resposta.body;
+              this.ufLocalizado = true;
+            } else {
+              this.localidade = [];
+              this.ufLocalizado = false;
+            }
           }
-        }
+  
+        }, 500);
       });
 
       this.sub$.add(subscription);

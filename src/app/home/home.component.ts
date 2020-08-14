@@ -60,19 +60,22 @@ export class HomeComponent implements OnInit, OnDestroy {
       }
       , error => { console.error('Ocorreu um erro ao consultar o CEP', error); }
       , () => {
-        this.aguarde = false;
-        
-        if (returnHttpResponse !== null || returnHttpResponse !== undefined) {
-          const resposta = returnHttpResponse as HttpResponse<Endereco>;
 
-          if (resposta.status === 200 && resposta.body !== null) {
-            this.localidade = resposta.body;
-            this.cepLocalizado = true;
-          } else {
-            this.localidade = null;
-            this.cepLocalizado = false;
+        setTimeout(() => {
+          this.aguarde = false;
+
+          if (returnHttpResponse !== null || returnHttpResponse !== undefined) {
+            const resposta = returnHttpResponse as HttpResponse<Endereco>;
+  
+            if (resposta.status === 200 && resposta.body !== null) {
+              this.localidade = resposta.body;
+              this.cepLocalizado = true;
+            } else {
+              this.localidade = null;
+              this.cepLocalizado = false;
+            }
           }
-        }
+        }, 500);
       });
 
       this.sub$.add(subscription);
